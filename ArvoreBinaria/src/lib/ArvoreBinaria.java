@@ -14,15 +14,15 @@ import java.util.Stack;
  *
  * @author Erick Loyola
  */
-public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
+public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     
     protected No<T> raiz = null;
     protected Comparator<T> comparador;
 
     protected No<T> atual = null;
-    private Stack<NoExemplo<T>> pilha = new Stack<>();
+    private Stack<No<T>> pilha = new Stack<>();
   
-    public ArvoreBinariaExemplo(Comparator<T> comp) {
+    public ArvoreBinaria(Comparator<T> comp) {
 
         comparador = comp;
     }
