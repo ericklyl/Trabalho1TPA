@@ -16,10 +16,10 @@ import java.util.Stack;
  */
 public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
     
-    protected NoExemplo<T> raiz = null;
+    protected No<T> raiz = null;
     protected Comparator<T> comparador;
 
-    protected NoExemplo<T> atual = null;
+    protected No<T> atual = null;
     private Stack<NoExemplo<T>> pilha = new Stack<>();
   
     public ArvoreBinariaExemplo(Comparator<T> comp) {
