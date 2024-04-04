@@ -29,7 +29,7 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
     
     @Override
     public void adicionar(T novoValor) {
-        raiz = adicionarRecusivamente(raiz,novoValor);
+        raiz = adicionarRecursivo(raiz,novoValor);
     }
 
     private No<T> adicionarRecursivo(No<T> no, T novoValor) {
