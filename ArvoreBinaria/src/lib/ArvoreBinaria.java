@@ -21,6 +21,9 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
     protected No<T> atual = null;
     private Stack<No<T>> pilha = new Stack<>();
+
+    private ArrayList<No<T>> pilhaNavegadora = null;
+    private boolean primeiraChamada = true;
   
     public ArvoreBinaria(Comparator<T> comp) {
 
