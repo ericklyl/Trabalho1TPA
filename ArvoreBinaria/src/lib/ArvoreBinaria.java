@@ -54,16 +54,16 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
     private T pesquisarRecursivo(No<T> no, T valor) {
         if (no == null) {
-            return null; // Valor não encontrado na árvore
+            return null;
         }
 
         int comparacao = comparador.compare(valor, no.getValor());
         if (comparacao == 0) {
-            return no.getValor(); // Valor encontrado
+            return no.getValor();
         } else if (comparacao < 0) {
-            return pesquisarRecursivo(no.getFilhoEsquerda(), valor); // Busca na subárvore esquerda
+            return pesquisarRecursivo(no.getFilhoEsquerda(), valor);
         } else {
-            return pesquisarRecursivo(no.getFilhoDireita(), valor); // Busca na subárvore direita
+            return pesquisarRecursivo(no.getFilhoDireita(), valor);
         }
     }
 
@@ -74,20 +74,20 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
     private T pesquisarRecursivo(No<T> no, T valor, Comparator comparador) {
         if (no == null) {
-            return null; // Valor não encontrado na árvore
+            return null;
         }
 
         int comparacao = comparador.compare(valor, no.getValor());
         if (comparacao == 0) {
-            return no.getValor(); // Valor encontrado
+            return no.getValor();
         } else {
-            // Como o comparador não é o mesmo da árvore, é necessário buscar em ambos os lados
+            
             T encontradoEsquerda = pesquisarRecursivo(no.getFilhoEsquerda(), valor, comparador);
             T encontradoDireita = pesquisarRecursivo(no.getFilhoDireita(), valor, comparador);
             if (encontradoEsquerda != null) {
-                return encontradoEsquerda; // Valor encontrado na subárvore esquerda
+                return encontradoEsquerda;
             } else {
-                return encontradoDireita; // Valor encontrado na subárvore direita (ou não encontrado)
+                return encontradoDireita;
             }
         }
     }
