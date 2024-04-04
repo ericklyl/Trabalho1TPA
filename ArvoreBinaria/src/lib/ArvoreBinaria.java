@@ -49,14 +49,49 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
     @Override
     public T pesquisar(T valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return pesquisarRecursivo(raiz, valor);
     }
 
-   @Override
+    private T pesquisarRecursivo(No<T> no, T valor) {
+        if (no == null) {
+            return null; // Valor não encontrado na árvore
+        }
+
+        int comparacao = comparador.compare(valor, no.getValor());
+        if (comparacao == 0) {
+            return no.getValor(); // Valor encontrado
+        } else if (comparacao < 0) {
+            return pesquisarRecursivo(no.getFilhoEsquerda(), valor); // Busca na subárvore esquerda
+        } else {
+            return pesquisarRecursivo(no.getFilhoDireita(), valor); // Busca na subárvore direita
+        }
+    }
+
+    @Override
     public T pesquisar(T valor, Comparator comparador) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return pesquisarRecursivo(raiz, valor, comparador);
     }
 
+    private T pesquisarRecursivo(No<T> no, T valor, Comparator comparador) {
+        if (no == null) {
+            return null; // Valor não encontrado na árvore
+        }
+
+        int comparacao = comparador.compare(valor, no.getValor());
+        if (comparacao == 0) {
+            return no.getValor(); // Valor encontrado
+        } else {
+            // Como o comparador não é o mesmo da árvore, é necessário buscar em ambos os lados
+            T encontradoEsquerda = pesquisarRecursivo(no.getFilhoEsquerda(), valor, comparador);
+            T encontradoDireita = pesquisarRecursivo(no.getFilhoDireita(), valor, comparador);
+            if (encontradoEsquerda != null) {
+                return encontradoEsquerda; // Valor encontrado na subárvore esquerda
+            } else {
+                return encontradoDireita; // Valor encontrado na subárvore direita (ou não encontrado)
+            }
+        }
+    }
+    
     @Override
     public T remover(T valor) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
