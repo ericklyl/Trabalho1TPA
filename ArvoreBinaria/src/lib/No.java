@@ -16,7 +16,7 @@ public class No<T> {
     private No<T> filhoEsquerda;
 
     
-    public NoExemplo(T valor){
+    public No(T valor){
         this.valor = valor;
         this.filhoDireita = null;
         this.filhoEsquerda = null;
