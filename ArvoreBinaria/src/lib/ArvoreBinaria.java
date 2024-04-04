@@ -14,22 +14,37 @@ import java.util.Stack;
  *
  * @author Erick Loyola
  */
-public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
+public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     
-    protected NoExemplo<T> raiz = null;
+    protected No<T> raiz = null;
     protected Comparator<T> comparador;
 
-    protected NoExemplo<T> atual = null;
-    private Stack<NoExemplo<T>> pilha = new Stack<>();
+    protected No<T> atual = null;
+    private Stack<No<T>> pilha = new Stack<>();
+
+    private ArrayList<No<T>> pilhaNavegadora = null;
+    private boolean primeiraChamada = true;
   
-    public ArvoreBinariaExemplo(Comparator<T> comp) {
+    public ArvoreBinaria(Comparator<T> comp) {
 
         comparador = comp;
     }
     
     @Override
     public void adicionar(T novoValor) {
-        raiz = adicionarRecusivamente(raiz,novoValor);
+        raiz = adicionarRecursivo(raiz,novoValor);
+    }
+
+    private No<T> adicionarRecursivo(No<T> no, T novoValor) {
+    if (no == null) {
+        return new No<>(novoValor);
+    }
+    if (comparador.compare(novoValor, no.getValor()) < 0) {
+        no.setFilhoEsquerda(adicionarRecursivo(no.getFilhoEsquerda(), novoValor));
+    } else if (comparador.compare(novoValor, no.getValor()) > 0) {
+        no.setFilhoDireita(adicionarRecursivo(no.getFilhoDireita(), novoValor));
+    }
+    return no;
     }
 
     @Override
