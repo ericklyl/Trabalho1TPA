@@ -32,6 +32,18 @@ public class ArvoreBinariaExemplo<T> implements IArvoreBinaria<T> {
         raiz = adicionarRecusivamente(raiz,novoValor);
     }
 
+    private No<T> adicionarRecursivo(No<T> no, T novoValor) {
+    if (no == null) {
+        return new No<>(novoValor);
+    }
+    if (comparador.compare(novoValor, no.getValor()) < 0) {
+        no.setFilhoEsquerda(adicionarRecursivo(no.getFilhoEsquerda(), novoValor));
+    } else if (comparador.compare(novoValor, no.getValor()) > 0) {
+        no.setFilhoDireita(adicionarRecursivo(no.getFilhoDireita(), novoValor));
+    }
+    return no;
+    }
+
     @Override
     public T pesquisar(T valor) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
