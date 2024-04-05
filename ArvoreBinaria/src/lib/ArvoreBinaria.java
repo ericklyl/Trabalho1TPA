@@ -32,20 +32,39 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     
     @Override
     public void adicionar(T novoValor) {
-        raiz = adicionarRecursivo(raiz,novoValor);
+    if (raiz == null) {
+        // Se a árvore estiver vazia, inicializa a pilha navegadora para métodos auxiliares da árvore.
+        pilhaNavegadora = new ArrayList<>();
+        raiz = new No<>(novoValor); // Define o novo valor como a raiz da árvore.
+        return;
     }
 
-    private No<T> adicionarRecursivo(No<T> no, T novoValor) {
-    if (no == null) {
-        return new No<>(novoValor);
+    noAtual = raiz;
+
+    while (true) {
+        // Compara o novo valor com o valor do nó atual.
+        int comparacao = comparador.compare(novoValor, noAtual.getValor());
+
+        if (comparacao < 0) {
+            if (noAtual.getNoEsquerda() == null) {
+                // Se não houver filho esquerdo do nó atual, adiciona o novo valor como filho esquerdo.
+                noAtual.setNoEsquerda(new No<>(novoValor));
+                return; // Encerra o método após adicionar o novo valor.
+            }
+            noAtual = noAtual.getNoEsquerda(); // Avança para o filho esquerdo.
+        } else if (comparacao > 0) {
+            if (noAtual.getNoDireita() == null) {
+                // Se não houver filho direito do nó atual, adiciona o novo valor como filho direito.
+                noAtual.setNoDireita(new No<>(novoValor));
+                return; // Encerra o método após adicionar o novo valor.
+            }
+            noAtual = noAtual.getNoDireita(); // Avança para o filho direito.
+        } else {
+            // Se o comparador retornar 0, significa que o valor já existe na árvore, então não faz nada.
+            return;
+        }
     }
-    if (comparador.compare(novoValor, no.getValor()) < 0) {
-        no.setFilhoEsquerda(adicionarRecursivo(no.getFilhoEsquerda(), novoValor));
-    } else if (comparador.compare(novoValor, no.getValor()) > 0) {
-        no.setFilhoDireita(adicionarRecursivo(no.getFilhoDireita(), novoValor));
-    }
-    return no;
-    }
+}
 
     @Override
     public T pesquisar(T valor) {
