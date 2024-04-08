@@ -154,22 +154,31 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
     @Override
     public int altura() {
-        return alturaRecursiva(raiz);
-    }
-
-    private int alturaRecursiva(No<T> no){
-        if (no == null) {
-            return -1;
+        if (raiz == null) {
+            return -1; // Retorna -1 para árvore vazia
         }
 
-        if (no.getFilhoEsquerda() == null && no.getFilhoDireita() == null) {
-            return 0;
+        Stack<No<T>> pilha = new Stack<>();
+        Stack<Integer> alturas = new Stack<>();
+        int alturaMaxima = -1;
+        int alturaAtual = 0;
+        No<T> noAtual = raiz;
+
+        while (noAtual != null || !pilha.isEmpty()) {
+            if (noAtual != null) {
+                pilha.push(noAtual);
+                alturas.push(++alturaAtual);
+                noAtual = noAtual.getFilhoEsquerda();
+            } else {
+                noAtual = pilha.pop();
+                alturaAtual = alturas.pop();
+                if (alturaAtual > alturaMaxima) {
+                    alturaMaxima = alturaAtual;
+                }
+                noAtual = noAtual.getFilhoDireita();
+            }
         }
-
-        int esquerda = alturaRecursiva(no.getFilhoEsquerda());
-        int direita = alturaRecursiva(no.getFilhoDireita());
-
-        return Math.max(esquerda, direita) + 1;
+        return alturaMaxima;
     }
     
     @Override
