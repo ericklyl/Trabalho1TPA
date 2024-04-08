@@ -10,7 +10,7 @@ import java.util.Stack;
  * @author Renzo Avance
  * @author Bruno Mian
  * @author Rodolfo Luiz
- * @author Thalisson
+ * @author Thalison Vinicius
  */
 public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     
@@ -181,9 +181,15 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         return alturaMaxima;
     }
     
-    @Override
     public int quantidadeNos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return contarNos(raiz);
+    }
+
+    private int contarNos(No<T> no) {
+        if (no == null) {
+            return 0; // Nó nulo
+        }
+        return 1 + contarNos(no.getFilhoEsquerda()) + contarNos(no.getFilhoDireita());
     }
 
     @Override
