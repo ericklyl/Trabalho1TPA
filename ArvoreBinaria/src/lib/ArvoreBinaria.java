@@ -199,7 +199,27 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     
     @Override
     public String caminharEmOrdem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.    
+        if (raiz == null) {
+            return "[]"; // Retorna uma string vazia se a árvore estiver vazia.
+        }
+
+        StringBuilder resultado = new StringBuilder("[");
+        caminharEmOrdemRecursivo(raiz, resultado);
+        resultado.setLength(resultado.length() - 2);
+        resultado.append("]");
+
+        return resultado.toString();
+    }
+
+    private void caminharEmOrdemRecursivo(No<T> no, StringBuilder resultado) {
+        if (no == null) {
+            return;
+        }
+        caminharEmOrdemRecursivo(no.getFilhoEsquerda(), resultado);
+
+        resultado.append(no.getValor().toString()).append(", \n");
+
+        caminharEmOrdemRecursivo(no.getFilhoDireita(), resultado);
     }
         
 }
