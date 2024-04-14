@@ -1,18 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- * COMENTÁRIO TESTE KDOSKFSDKFSDKFSDKFSDKAFKSDFKSADFKSADKF
- */
 package lib;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Stack;
+
 
 /**
  *
  * @author Erick Loyola
+ * @author Renzo Avance
+ * @author Bruno Mian
+ * @author Rodolfo Luiz
+ * @author Thalison Vinicius
  */
 public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     
@@ -22,9 +20,9 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     protected No<T> atual = null;
     private Stack<No<T>> pilha = new Stack<>();
 
-    private ArrayList<No<T>> pilhaNavegadora = null;
-    private boolean primeiraChamada = true;
-  
+    // private ArrayList<No<T>> pilhaNavegadora = null;
+    // private boolean primeiraChamada = true;
+
     public ArvoreBinaria(Comparator<T> comp) {
 
         comparador = comp;
@@ -34,31 +32,31 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     public void adicionar(T novoValor) {
     if (raiz == null) {
         // Se a árvore estiver vazia, inicializa a pilha navegadora para métodos auxiliares da árvore.
-        pilhaNavegadora = new ArrayList<>();
+        // pilhaNavegadora = new ArrayList<>();
         raiz = new No<>(novoValor); // Define o novo valor como a raiz da árvore.
         return;
     }
 
-    noAtual = raiz;
+    atual = raiz;
 
     while (true) {
         // Compara o novo valor com o valor do nó atual.
-        int comparacao = comparador.compare(novoValor, noAtual.getValor());
+        int comparacao = comparador.compare(novoValor, atual.getValor());
 
         if (comparacao < 0) {
-            if (noAtual.getNoEsquerda() == null) {
+            if (atual.getFilhoEsquerda() == null) {
                 // Se não houver filho esquerdo do nó atual, adiciona o novo valor como filho esquerdo.
-                noAtual.setNoEsquerda(new No<>(novoValor));
+                atual.setFilhoEsquerda(new No<>(novoValor));
                 return; // Encerra o método após adicionar o novo valor.
             }
-            noAtual = noAtual.getNoEsquerda(); // Avança para o filho esquerdo.
+            atual = atual.getFilhoEsquerda(); // Avança para o filho esquerdo.
         } else if (comparacao > 0) {
-            if (noAtual.getNoDireita() == null) {
+            if (atual.getFilhoDireita() == null) {
                 // Se não houver filho direito do nó atual, adiciona o novo valor como filho direito.
-                noAtual.setNoDireita(new No<>(novoValor));
+                atual.setFilhoDireita(new No<>(novoValor));
                 return; // Encerra o método após adicionar o novo valor.
             }
-            noAtual = noAtual.getNoDireita(); // Avança para o filho direito.
+            atual = atual.getFilhoDireita(); // Avança para o filho direito.
         } else {
             // Se o comparador retornar 0, significa que o valor já existe na árvore, então não faz nada.
             return;
@@ -113,18 +111,85 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     
     @Override
     public T remover(T valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.raiz = removerRecursivo(this.raiz, valor);
+        return valor;
+    }
+
+    public No<T> removerRecursivo(No <T> no, T valor){
+        // caso não tenha nenhum nó na arvore, importante fazer essa verificação
+        if (no == null){
+            return no;
+        }
+
+        if (this.comparador.compare(valor, no.getValor()) < 0) {
+            no.setFilhoEsquerda(removerRecursivo(no.getFilhoEsquerda(), valor));
+        } else if (this.comparador.compare(valor, no.getValor()) > 0) {
+            no.setFilhoDireita(removerRecursivo(no.getFilhoDireita(), valor));
+        } else {
+            // nesse caso verificaremos se o nó não tem filhos, ou se ele tem apenas 1 filho
+            if (no.getFilhoEsquerda() == null) {
+                return no.getFilhoDireita();
+            } else if (no.getFilhoDireita() == null) {
+                return no.getFilhoEsquerda();
+            }
+
+            // agora nesse caso verificaremos se o nó tem 2 filhos (se chegou até aqui, é porque tem)
+            no.setValor(acharMinimo(no.getFilhoDireita()).getValor());
+            no.setFilhoDireita(removerRecursivo(no.getFilhoDireita(), no.getValor()));
+        }
+
+        return no;
+    }
+
+    
+
+    public No<T> acharMinimo(No<T> no) {
+        // lógica pra encontrar o minímo
+        No<T> atual = no;
+        while (atual.getFilhoEsquerda() != null) {
+            atual = atual.getFilhoEsquerda();
+        }
+        return atual;
     }
 
     @Override
     public int altura() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (raiz == null) {
+            return -1; // Retorna -1 para árvore vazia
+        }
+
+        Stack<No<T>> pilha = new Stack<>();
+        Stack<Integer> alturas = new Stack<>();
+        int alturaMaxima = -1;
+        int alturaAtual = 0;
+        No<T> noAtual = raiz;
+
+        while (noAtual != null || !pilha.isEmpty()) {
+            if (noAtual != null) {
+                pilha.push(noAtual);
+                alturas.push(++alturaAtual);
+                noAtual = noAtual.getFilhoEsquerda();
+            } else {
+                noAtual = pilha.pop();
+                alturaAtual = alturas.pop();
+                if (alturaAtual > alturaMaxima) {
+                    alturaMaxima = alturaAtual;
+                }
+                noAtual = noAtual.getFilhoDireita();
+            }
+        }
+        return alturaMaxima;
     }
-       
     
-    @Override
     public int quantidadeNos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return contarNos(raiz);
+    }
+
+    private int contarNos(No<T> no) {
+        if (no == null) {
+            return 0; // Nó nulo
+        }
+        return 1 + contarNos(no.getFilhoEsquerda()) + contarNos(no.getFilhoDireita());
     }
 
     @Override
