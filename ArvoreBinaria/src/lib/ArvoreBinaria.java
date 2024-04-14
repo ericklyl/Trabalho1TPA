@@ -216,7 +216,6 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
         return resultado.toString().trim();
     }    
-    }
     
     @Override
     public String caminharEmOrdem() {
