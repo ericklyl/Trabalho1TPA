@@ -1,22 +1,33 @@
 package app;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Disciplina {
+    private int codigo;
     private String nome;
-    private List<Disciplina> preRequisitos;
+    private int cargaHoraria;
+    private ArrayList<Disciplina> preRequisitos;
 
-    public Disciplina(String nome) {
+    public Disciplina(int codigo, String nome, int cargaHoraria){
+        this.codigo = codigo;
         this.nome = nome;
-        this.preRequisitos = new ArrayList<>();
+        this.cargaHoraria = cargaHoraria;
+        this.preRequisitos = new ArrayList<Disciplina>();
+    }
+
+    public int getCodigo() {
+        return codigo;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public List<Disciplina> getPreRequisitos() {
+    public int getCargaHoraria() {
+        return cargaHoraria;
+    }
+
+    public ArrayList<Disciplina> getPreRequisitos() {
         return preRequisitos;
     }
 
@@ -24,19 +35,7 @@ public class Disciplina {
         preRequisitos.add(disciplina);
     }
 
-    @Override
     public String toString() {
-        return "Disciplina: " + nome;
-    }
-
-    public void listarPreRequisitos() {
-        System.out.println("Pré-requisitos para " + nome + ":");
-        if (preRequisitos.isEmpty()) {
-            System.out.println("Nenhum");
-        } else {
-            for (Disciplina d : preRequisitos) {
-                System.out.println(d);
-            }
-        }
+        return ("Código " + this.getCodigo() + ": " + this.getNome() + " - " + this.getCargaHoraria() + "h");
     }
 }
