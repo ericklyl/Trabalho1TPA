@@ -71,4 +71,33 @@ public class Aplicativo {
             System.out.println("Erro ao adicionar pré-requisito");
         }
     }
+
+    public void menu() {
+        Scanner s = new Scanner(System.in);
+        while (true) {
+            System.out.println("1 - Cadastrar Aluno");
+            System.out.println("2 - Cadastrar Disciplina");
+            System.out.println("3 - Cadastrar pré-requisito");
+            System.out.println("0 - Sair");
+            System.out.println("Digite sua opção:");
+            String opcao = s.nextLine();
+            if (opcao.equals("1")) {
+                CadastrarAluno();
+            } else if (opcao.equals("2")) {
+                CadastrarDisciplina();
+            } else if (opcao.equals("3")) {
+                CadastrarPreRequisito();
+            } else if (opcao.equals("0")) {
+                System.out.println("Obrigado por usar o sistema!");
+                break;
+            } else {
+                System.out.println("Opção inválida, por favor digite novamente.");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Aplicativo app = new Aplicativo();
+        app.menu();
+    }
 }
