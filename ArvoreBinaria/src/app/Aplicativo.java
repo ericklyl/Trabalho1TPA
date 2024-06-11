@@ -71,6 +71,10 @@ public class Aplicativo {
                         return;  // Volta ao menu principal
                     }
                     preRequisito = disciplinas.pesquisar(new Disciplina(codPreRequisito, "", 0));
+                    if (preRequisito == disciplinaEscolhida) {
+                        System.out.println("Você não pode cadastrar uma disciplina como seu próprio requisito!");
+                        return;
+                    }
                     if (preRequisito == null) {
                         System.out.println("A disciplina pré-requisito não foi encontrada. Por favor, insira um código válido.");
                     }
