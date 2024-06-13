@@ -14,7 +14,7 @@ import java.util.ArrayDeque;
  * @author Thalison Vinicius
  */
 public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
-    
+
     protected No<T> raiz = null;
     protected Comparator<T> comparador;
 
@@ -28,42 +28,42 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
         comparador = comp;
     }
-    
+
     @Override
     public void adicionar(T novoValor) {
-    if (raiz == null) {
-        // Se a árvore estiver vazia, inicializa a pilha navegadora para métodos auxiliares da árvore.
-        // pilhaNavegadora = new ArrayList<>();
-        raiz = new No<>(novoValor); // Define o novo valor como a raiz da árvore.
-        return;
-    }
-
-    atual = raiz;
-
-    while (true) {
-        // Compara o novo valor com o valor do nó atual.
-        int comparacao = comparador.compare(novoValor, atual.getValor());
-
-        if (comparacao < 0) {
-            if (atual.getFilhoEsquerda() == null) {
-                // Se não houver filho esquerdo do nó atual, adiciona o novo valor como filho esquerdo.
-                atual.setFilhoEsquerda(new No<>(novoValor));
-                return; // Encerra o método após adicionar o novo valor.
-            }
-            atual = atual.getFilhoEsquerda(); // Avança para o filho esquerdo.
-        } else if (comparacao > 0) {
-            if (atual.getFilhoDireita() == null) {
-                // Se não houver filho direito do nó atual, adiciona o novo valor como filho direito.
-                atual.setFilhoDireita(new No<>(novoValor));
-                return; // Encerra o método após adicionar o novo valor.
-            }
-            atual = atual.getFilhoDireita(); // Avança para o filho direito.
-        } else {
-            // Se o comparador retornar 0, significa que o valor já existe na árvore, então não faz nada.
+        if (raiz == null) {
+            // Se a árvore estiver vazia, inicializa a pilha navegadora para métodos auxiliares da árvore.
+            // pilhaNavegadora = new ArrayList<>();
+            raiz = new No<>(novoValor); // Define o novo valor como a raiz da árvore.
             return;
         }
+
+        atual = raiz;
+
+        while (true) {
+            // Compara o novo valor com o valor do nó atual.
+            int comparacao = comparador.compare(novoValor, atual.getValor());
+
+            if (comparacao < 0) {
+                if (atual.getFilhoEsquerda() == null) {
+                    // Se não houver filho esquerdo do nó atual, adiciona o novo valor como filho esquerdo.
+                    atual.setFilhoEsquerda(new No<>(novoValor));
+                    return; // Encerra o método após adicionar o novo valor.
+                }
+                atual = atual.getFilhoEsquerda(); // Avança para o filho esquerdo.
+            } else if (comparacao > 0) {
+                if (atual.getFilhoDireita() == null) {
+                    // Se não houver filho direito do nó atual, adiciona o novo valor como filho direito.
+                    atual.setFilhoDireita(new No<>(novoValor));
+                    return; // Encerra o método após adicionar o novo valor.
+                }
+                atual = atual.getFilhoDireita(); // Avança para o filho direito.
+            } else {
+                // Se o comparador retornar 0, significa que o valor já existe na árvore, então não faz nada.
+                return;
+            }
+        }
     }
-}
 
     @Override
     public T pesquisar(T valor) {
@@ -99,7 +99,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         if (comparacao == 0) {
             return no.getValor();
         } else {
-            
+
             T encontradoEsquerda = pesquisarRecursivo(no.getFilhoEsquerda(), valor, comparador);
             T encontradoDireita = pesquisarRecursivo(no.getFilhoDireita(), valor, comparador);
             if (encontradoEsquerda != null) {
@@ -109,7 +109,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
             }
         }
     }
-    
+
     @Override
     public T remover(T valor) {
         this.raiz = removerRecursivo(this.raiz, valor);
@@ -142,7 +142,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         return no;
     }
 
-    
+
 
     public No<T> acharMinimo(No<T> no) {
         // lógica pra encontrar o minímo
@@ -181,7 +181,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
         return alturaMaxima;
     }
-    
+
     public int quantidadeNos() {
         return contarNos(raiz);
     }
@@ -216,8 +216,8 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
 
         return resultado.toString().trim();
-    }    
-    
+    }
+
     @Override
     public String caminharEmOrdem() {
         if (raiz == null) {
@@ -242,5 +242,22 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
         caminharEmOrdemRecursivo(no.getFilhoDireita(), resultado);
     }
-        
+
+    public void emOrdem(NoVisitor<T> visitor) {
+        emOrdemRecursivo(raiz, visitor);
+    }
+
+    private void emOrdemRecursivo(No<T> no, NoVisitor<T> visitor) {
+        if (no == null) {
+            return;
+        }
+        emOrdemRecursivo(no.getFilhoEsquerda(), visitor);
+        visitor.visit(no.getValor());
+        emOrdemRecursivo(no.getFilhoDireita(), visitor);
+    }
+
+    public No<T> getRaiz() {
+        return raiz;
+    }
+
 }
