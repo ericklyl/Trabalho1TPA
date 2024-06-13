@@ -90,7 +90,45 @@ public class Aplicativo {
         }
     }
 
-    //public void disciplinasCursadas() {}
+    public void disciplinasCursadas() {
+        Scanner scanner = new Scanner(System.in);
+        try {
+            System.out.println("Digite a matrícula do aluno:");
+            int matricula = scanner.nextInt();
+            Aluno aluno = new Aluno(matricula, ""); // Criando um objeto aluno apenas com a matrícula para pesquisa
+            System.out.println("Digite o código da disciplina:");
+            int codigoDisciplina = scanner.nextInt();
+            Disciplina disciplina = new Disciplina(codigoDisciplina, "", 0); // Criando um objeto disciplina apenas com o código para pesquisa
+            Aluno alunoEncontrado = alunos.pesquisar(aluno);
+            Disciplina disciplinaEncontrada = disciplinas.pesquisar(disciplina);
+            if (alunoEncontrado != null && disciplinaEncontrada != null) {
+                boolean cursouPreRequisitos = true;
+                // Verifica se o aluno cursou todos os pré-requisitos da disciplina
+                for (Disciplina preRequisito : disciplinaEncontrada.getPreRequisitos()) {
+                    boolean cursouPreRequisito = false;
+                    for (Disciplina disciplinaCursada : alunoEncontrado.getDiscCursadas()) {
+                        if (disciplinaCursada.equals(preRequisito)) {
+                            cursouPreRequisito = true;
+                            break;
+                        }
+                    }
+                    if (!cursouPreRequisito) {
+                        cursouPreRequisitos = false;
+                        System.out.println("O aluno não cursou o pré-requisito: " + preRequisito.getNome());
+                    }
+                }
+                // Se o aluno cursou todos os pré-requisitos, registra que ele cursou a disciplina
+                if (cursouPreRequisitos) {
+                    alunoEncontrado.addDiscCursada(disciplinaEncontrada);
+                    System.out.println("Disciplina adicionada às disciplinas cursadas pelo aluno.");
+                }
+            } else {
+                System.out.println("Aluno ou disciplina não encontrados.");
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao registrar disciplinas cursadas.");
+        }
+    }
 
     public void consultarAlunoPorNome() {
         Scanner alunoNomeScanner = new Scanner(System.in);
@@ -141,7 +179,7 @@ public class Aplicativo {
             } else if (opcao.equals("3")) {
                 CadastrarPreRequisito();
             } else if (opcao.equals("4")) {
-                //disciplinasCursadas();
+                disciplinasCursadas();
             } else if (opcao.equals("5")) {
                 consultarAlunoPorNome();
             } else if (opcao.equals("6")) {
