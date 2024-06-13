@@ -92,7 +92,30 @@ public class Aplicativo {
 
     //public void disciplinasCursadas() {}
 
-    //public void consultarAlunoPorNome() {}
+    public void consultarAlunoPorNome() {
+        Scanner alunoNomeScanner = new Scanner(System.in);
+        System.out.println("Digite o nome do aluno a ser consultado: ");
+        String nomeAluno = alunoNomeScanner.nextLine();
+        Stack<Aluno> resultado = new Stack<>();
+        alunos.emOrdem(aluno -> {
+            if (aluno.getNome().equalsIgnoreCase(nomeAluno)) {
+                resultado.add(aluno);
+            }
+        });
+        if (resultado.isEmpty()) {
+            System.out.println("Aluno não encontrado.");
+        } else {
+            for (Aluno aluno : resultado) {
+                System.out.println("Matrícula: " + aluno.getMatricula());
+                System.out.println("Nome: " + aluno.getNome());
+                System.out.println("Disciplinas Cursadas: ");
+                for (Disciplina disciplina : aluno.getDisciplinasCursadas()) {
+                    System.out.println(disciplina);
+                }
+            }
+        }
+    }
+
 
     //public void consultarAlunoPorMatricula() {}
 
@@ -120,7 +143,7 @@ public class Aplicativo {
             } else if (opcao.equals("4")) {
                 //disciplinasCursadas();
             } else if (opcao.equals("5")) {
-                //consultarAlunoPorNome();
+                consultarAlunoPorNome();
             } else if (opcao.equals("6")) {
                // consultarAlunoPorMatricula();
             } else if (opcao.equals("7")) {
