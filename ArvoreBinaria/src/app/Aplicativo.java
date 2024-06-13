@@ -4,13 +4,14 @@ import lib.ArvoreBinaria;
 import lib.IArvoreBinaria;
 
 import java.util.Scanner;
+import java.util.Stack;
+
 public class Aplicativo {
     ArvoreBinaria<Aluno> alunos = new ArvoreBinaria<Aluno>(new ComparadorAlunoPorMatricula());
     ArvoreBinaria<Disciplina> disciplinas = new ArvoreBinaria<>(new ComparadorDisciplina());
 
     public void CadastrarAluno() {
         Scanner cadAluno = new Scanner(System.in);
-
         try {
             System.out.println("Digite o nome do aluno: ");
             String nomeAluno = cadAluno.nextLine();
@@ -26,7 +27,6 @@ public class Aplicativo {
 
     public void CadastrarDisciplina() {
         Scanner cadDisciplina = new Scanner(System.in);
-
         try {
             System.out.println("Digite o nome da disciplina:");
             String nomeDisciplina = cadDisciplina.nextLine();
@@ -44,55 +44,47 @@ public class Aplicativo {
 
     public void CadastrarPreRequisito() {
         Scanner disciplinaScanner = new Scanner(System.in);
-
         while (true) {
             System.out.println("Disciplinas cadastradas: \n");
             System.out.println(disciplinas.caminharEmOrdem());
-
             try {
                 Disciplina disciplinaEscolhida = null;
                 while (disciplinaEscolhida == null) {
                     System.out.println("Digite o código da disciplina que deseja adicionar um novo pré-requisito (ou 0 para voltar ao menu): ");
                     int codDisciplina = disciplinaScanner.nextInt();
                     if (codDisciplina == 0) {
-                        return;  // Volta ao menu principal
+                        return;
                     }
                     disciplinaEscolhida = disciplinas.pesquisar(new Disciplina(codDisciplina, "", 0));
                     if (disciplinaEscolhida == null) {
                         System.out.println("A disciplina escolhida não foi encontrada. Por favor, insira um código válido.");
                     }
                 }
-
                 Disciplina preRequisito = null;
                 while (preRequisito == null) {
                     System.out.println("Digite o código da disciplina que deseja adicionar como pré-requisito (ou 0 para voltar ao menu): ");
                     int codPreRequisito = disciplinaScanner.nextInt();
                     if (codPreRequisito == 0) {
-                        return;  // Volta ao menu principal
-                    }
-                    preRequisito = disciplinas.pesquisar(new Disciplina(codPreRequisito, "", 0));
-                    if (preRequisito == disciplinaEscolhida) {
-                        System.out.println("Você não pode cadastrar uma disciplina como seu próprio requisito!");
                         return;
                     }
+                    preRequisito = disciplinas.pesquisar(new Disciplina(codPreRequisito, "", 0));
                     if (preRequisito == null) {
                         System.out.println("A disciplina pré-requisito não foi encontrada. Por favor, insira um código válido.");
                     }
                 }
-
                 if (disciplinaEscolhida != null && preRequisito != null) {
                     if (disciplinaEscolhida.getPreRequisitos().contains(preRequisito)) {
                         System.out.println("A disciplina escolhida já possui esse pré-requisito!");
                     } else {
                         disciplinaEscolhida.addPreRequisito(preRequisito);
                         System.out.println("Pré-requisito cadastrado com sucesso");
-                        return;  // Volta ao menu principal
+                        return;
                     }
                 }
             } catch (Exception e) {
                 System.out.println("Erro ao adicionar pré-requisito. Deseja tentar novamente? (s/n)");
                 if (disciplinaScanner.next().equalsIgnoreCase("n")) {
-                    return;  // Volta ao menu principal
+                    return;
                 }
             }
         }
