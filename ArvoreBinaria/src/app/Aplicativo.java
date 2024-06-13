@@ -90,12 +90,24 @@ public class Aplicativo {
         }
     }
 
+    //public void disciplinasCursadas() {}
+
+    //public void consultarAlunoPorNome() {}
+
+    //public void consultarAlunoPorMatricula() {}
+
+    //public void removerAluno() {}
+
     public void menu() {
         Scanner s = new Scanner(System.in);
         while (true) {
             System.out.println("1 - Cadastrar Aluno");
             System.out.println("2 - Cadastrar Disciplina");
             System.out.println("3 - Cadastrar pré-requisito");
+            System.out.println("4 - Verificar disciplinas cursadas por aluno");
+            System.out.println("5 - Consultar aluno por nome");
+            System.out.println("6 - Consultar aluno por matrícula");
+            System.out.println("7 - Excluir aluno por matrícula");
             System.out.println("0 - Sair");
             System.out.println("Digite sua opção:");
             String opcao = s.nextLine();
@@ -105,9 +117,17 @@ public class Aplicativo {
                 CadastrarDisciplina();
             } else if (opcao.equals("3")) {
                 CadastrarPreRequisito();
+            } else if (opcao.equals("4")) {
+                //disciplinasCursadas();
+            } else if (opcao.equals("5")) {
+                //consultarAlunoPorNome();
+            } else if (opcao.equals("6")) {
+               // consultarAlunoPorMatricula();
+            } else if (opcao.equals("7")) {
+                //removerAluno();
             } else if (opcao.equals("0")) {
                 System.out.println("Obrigado por usar o sistema!");
-                break;
+                return;
             } else {
                 System.out.println("Opção inválida, por favor digite novamente.");
             }
