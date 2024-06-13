@@ -154,10 +154,35 @@ public class Aplicativo {
         }
     }
 
+    public void consultarAlunoPorMatricula() {
+        Scanner alunoMatriculaScanner = new Scanner(System.in);
+        System.out.println("Digite a matrícula do aluno a ser consultado: ");
+        int matriculaAluno = alunoMatriculaScanner.nextInt();
+        Aluno aluno = alunos.pesquisar(new Aluno(matriculaAluno, ""));
+        if (aluno == null) {
+            System.out.println("Aluno não encontrado.");
+        } else {
+            System.out.println("Matrícula: " + aluno.getMatricula());
+            System.out.println("Nome: " + aluno.getNome());
+            System.out.println("Disciplinas Cursadas: ");
+            for (Disciplina disciplina : aluno.getDisciplinasCursadas()) {
+                System.out.println(disciplina);
+            }
+        }
+    }
 
-    //public void consultarAlunoPorMatricula() {}
-
-    //public void removerAluno() {}
+    public void removerAluno() {
+        Scanner remAluno = new Scanner(System.in);
+        System.out.println("Digite a matrícula do aluno a ser removido:");
+        int matRemAluno = remAluno.nextInt();
+        Aluno alunoRemover = alunos.pesquisar(new Aluno(matRemAluno, ""));
+        if (alunoRemover != null) {
+            alunos.remover(alunoRemover);
+            System.out.println("Aluno removido com sucesso!");
+        } else {
+            System.out.println("Aluno não encontrado.");
+        }
+    }
 
     public void menu() {
         Scanner s = new Scanner(System.in);
@@ -183,9 +208,9 @@ public class Aplicativo {
             } else if (opcao.equals("5")) {
                 consultarAlunoPorNome();
             } else if (opcao.equals("6")) {
-               // consultarAlunoPorMatricula();
+                consultarAlunoPorMatricula();
             } else if (opcao.equals("7")) {
-                //removerAluno();
+                removerAluno();
             } else if (opcao.equals("0")) {
                 System.out.println("Obrigado por usar o sistema!");
                 return;
