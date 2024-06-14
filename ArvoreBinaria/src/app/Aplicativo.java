@@ -10,7 +10,7 @@ public class Aplicativo {
     ArvoreBinaria<Aluno> alunos = new ArvoreBinaria<Aluno>(new ComparadorAlunoPorMatricula());
     ArvoreBinaria<Disciplina> disciplinas = new ArvoreBinaria<>(new ComparadorDisciplina());
 
-    public void CadastrarAluno() {
+    public void cadastrarAluno() {
         Scanner cadAluno = new Scanner(System.in);
         try {
             System.out.println("Digite o nome do aluno: ");
@@ -25,7 +25,7 @@ public class Aplicativo {
         }
     }
 
-    public void CadastrarDisciplina() {
+    public void cadastrarDisciplina() {
         Scanner cadDisciplina = new Scanner(System.in);
         try {
             System.out.println("Digite o nome da disciplina:");
@@ -42,7 +42,7 @@ public class Aplicativo {
         }
     }
 
-    public void CadastrarPreRequisito() {
+    public void cadastrarPreRequisito() {
         Scanner disciplinaScanner = new Scanner(System.in);
         while (true) {
             System.out.println("Disciplinas cadastradas: \n");
@@ -76,7 +76,7 @@ public class Aplicativo {
                     if (disciplinaEscolhida.getPreRequisitos().contains(preRequisito)) {
                         System.out.println("A disciplina escolhida já possui esse pré-requisito!");
                     } else {
-                        disciplinaEscolhida.addPreRequisito(preRequisito);
+                        disciplinaEscolhida.adicionarPreRequisito(preRequisito);
                         System.out.println("Pré-requisito cadastrado com sucesso");
                         return;
                     }
@@ -114,7 +114,7 @@ public class Aplicativo {
                     }
                     if (!cursouPreRequisito) {
                         cursouPreRequisitos = false;
-                        System.out.println("O aluno não cursou o pré-requisito: " + preRequisito.getNome());
+                        System.out.println("O aluno não cursou o pré-requisito: " + preRequisito.getTitulo());
                     }
                 }
                 // Se o aluno cursou todos os pré-requisitos, registra que ele cursou a disciplina
@@ -144,12 +144,7 @@ public class Aplicativo {
             System.out.println("Aluno não encontrado.");
         } else {
             for (Aluno aluno : resultado) {
-                System.out.println("Matrícula: " + aluno.getMatricula());
-                System.out.println("Nome: " + aluno.getNome());
-                System.out.println("Disciplinas Cursadas: ");
-                for (Disciplina disciplina : aluno.getDisciplinasCursadas()) {
-                    System.out.println(disciplina);
-                }
+                System.out.println(aluno);
             }
         }
     }
@@ -162,12 +157,7 @@ public class Aplicativo {
         if (aluno == null) {
             System.out.println("Aluno não encontrado.");
         } else {
-            System.out.println("Matrícula: " + aluno.getMatricula());
-            System.out.println("Nome: " + aluno.getNome());
-            System.out.println("Disciplinas Cursadas: ");
-            for (Disciplina disciplina : aluno.getDisciplinasCursadas()) {
-                System.out.println(disciplina);
-            }
+            System.out.println(aluno);
         }
     }
 
@@ -198,11 +188,11 @@ public class Aplicativo {
             System.out.println("Digite sua opção:");
             String opcao = s.nextLine();
             if (opcao.equals("1")) {
-                CadastrarAluno();
+                cadastrarAluno();
             } else if (opcao.equals("2")) {
-                CadastrarDisciplina();
+                cadastrarDisciplina();
             } else if (opcao.equals("3")) {
-                CadastrarPreRequisito();
+                cadastrarPreRequisito();
             } else if (opcao.equals("4")) {
                 disciplinasCursadas();
             } else if (opcao.equals("5")) {
