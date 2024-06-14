@@ -1,7 +1,8 @@
 package app;
 
-
 import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author victoriocarvalho
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 public class Aluno {
     private int matricula;
     private String nome;
-    private ArrayList<Disciplina> discCursadas;
+    private List<Disciplina> discCursadas;
 
     public Aluno(int matricula, String nome) {
         this.matricula = matricula;
@@ -21,15 +22,25 @@ public class Aluno {
         this.discCursadas = new ArrayList<Disciplina>();
     }
 
-    public int getMatricula() { return matricula; }
+    public int getMatricula() {
+        return matricula;
+    }
 
-    public void setMatricula(int matricula) { this.matricula = matricula; }
+    public void setMatricula(int matricula) {
+        this.matricula = matricula;
+    }
 
-    public String getNome() { return nome; }
+    public String getNome() {
+        return nome;
+    }
 
-    public void setNome(String nome) { this.nome = nome; }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-    public ArrayList<Disciplina> getDiscCursadas() { return discCursadas; }
+    public List<Disciplina> getDiscCursadas() {
+        return discCursadas;
+    }
 
     public void addDiscCursada(Disciplina disciplina) {
         discCursadas.add(disciplina);
@@ -38,5 +49,16 @@ public class Aluno {
     public Disciplina[] getDisciplinasCursadas() {
         return discCursadas.toArray(new Disciplina[0]);
     }
-}
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Matrícula: ").append(matricula).append("\n");
+        sb.append("Nome: ").append(nome).append("\n");
+        sb.append("Disciplinas Cursadas:\n");
+        for (Disciplina disc : discCursadas) {
+            sb.append("  - ").append(disc.toString()).append("\n");
+        }
+        return sb.toString();
+    }
+}
