@@ -14,7 +14,7 @@ public class Disciplina {
         this.codigo = codigo;
         this.titulo = titulo;
         this.hora = hora;
-        this.preRequisitos = new ArrayList<>();
+        this.preRequisitos = new ArrayList<Disciplina>();
     }
 
     // Adiciona uma disciplina à lista de pré-requisitos
