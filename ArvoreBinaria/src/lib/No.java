@@ -10,16 +10,18 @@ package lib;
  * @author victoriocarvalho
  */
 public class No<T> {
+    //int altura foi adicionado posteriormente na etapa 4
     
     private T valor;
     private No<T> filhoDireita;
-    private No<T> filhoEsquerda;
+    private No<T> filhoEsquerda; 
+    private int altura;
 
-    
     public No(T valor){
         this.valor = valor;
-        this.filhoDireita = null;
-        this.filhoEsquerda = null;
+        // this.filhoDireita = null;
+        // this.filhoEsquerda = null;
+        this.altura = 1;            // vamos inicializar a altura como -1
     }
     
     /**
@@ -62,6 +64,14 @@ public class No<T> {
      */
     public void setFilhoEsquerda(No<T> filhoEsquerda) {
         this.filhoEsquerda = filhoEsquerda;
+    }
+
+    public int getAltura(){ // adicionado posteriormente para realizar o AppRelatorioArvoreBinaria e AppRelatorioAVL
+        return altura;
+    }
+
+    public void setAltura(int altura){ // adicionado posteriormente para realizar o AppRelatorioArvoreBinaria e AppRelatorioAVL
+        this.altura = altura;
     }
     
     

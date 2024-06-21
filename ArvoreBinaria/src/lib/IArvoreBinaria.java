@@ -39,13 +39,13 @@ public interface IArvoreBinaria<T> {
     
     /**
      * Método para pesquisar por um elemento na árvore utilizando um comparator passado como parâmetro. Como o comparador a ser usado não é o que 
-     indexou a árvore, você deve varrer todos os elementos da arvore na busca. O valor a ser buscado deve ser passado de acordo com o comparador passado.
+    indexou a árvore, você deve varrer todos os elementos da arvore na busca. O valor a ser buscado deve ser passado de acordo com o comparador passado.
      * @param valor - será utilizado para passar o valor da chave a ser buscada.
      * @param comparador - Comparator a ser utilizado na busca. 
      * @return caso tenha sido encontrado um elemento com o valor buscado, o mesmo será retornado. Caso contrário retorna null.
      */
     public T pesquisar(T valor, Comparator comparador);
- 
+
 
     /**
      * Método que busca por um elemento na árvore e, caso encontre, o remove da árvore e o retorna

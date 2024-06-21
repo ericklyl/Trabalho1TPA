@@ -109,10 +109,10 @@ public class GeradorDeArvores {
         String nome;
         for(i=1;i<=n;i++){
             //Cada vez que entra a matrícula é incrementada em 1.
-             matricula++;
-             nome = geraNomeCompleto();
+            matricula++;
+            nome = geraNomeCompleto();
              //Aqui crio um aluno com os dados gerados e o adiciono na árvore.
-             arv.adicionar(new Aluno(matricula,nome));
+            arv.adicionar(new Aluno(matricula,nome));
         }     
     }
     
