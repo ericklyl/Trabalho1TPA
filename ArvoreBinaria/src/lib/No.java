@@ -14,7 +14,7 @@ public class No<T> {
     
     private T valor;
     private No<T> filhoDireita;
-    private No<T> filhoEsquerda; 
+    private No<T> filhoEsquerda;
     private int altura;
 
     public No(T valor){
@@ -70,9 +70,24 @@ public class No<T> {
         return altura;
     }
 
+    public int obterAltura(){
+        return obterAltura(this);
+    }
+
+    private int obterAltura(No<T> raiz) {
+        if (raiz == null) {
+            return -1;
+        }
+        else {
+            int alturaDireita = obterAltura(raiz.getFilhoDireita());
+            int alturaEsquerda = obterAltura(raiz.getFilhoEsquerda());
+            return Math.max(alturaDireita,alturaEsquerda) + 1; //Retorne o maior entre as alturas + 1
+        }
+    }
+
     public void setAltura(int altura){ // adicionado posteriormente para realizar o AppRelatorioArvoreBinaria e AppRelatorioAVL
         this.altura = altura;
     }
-    
-    
+
+
 }
