@@ -142,8 +142,6 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         return no;
     }
 
-
-
     public No<T> acharMinimo(No<T> no) {
         // lógica pra encontrar o minímo
         No<T> atual = no;
@@ -155,31 +153,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
     @Override
     public int altura() {
-        if (raiz == null) {
-            return -1; // Retorna -1 para árvore vazia
-        }
-
-        Stack<No<T>> pilha = new Stack<>();
-        Stack<Integer> alturas = new Stack<>();
-        int alturaMaxima = 1;       // parte que eu fiquei 6h pra descobrir que aqui era o problema
-        int alturaAtual = -1;       // o alturaAtual tava como 1 e não pode pq a raiz não conta, por isso -1
-        No<T> noAtual = raiz;
-
-        while (noAtual != null || !pilha.isEmpty()) {
-            if (noAtual != null) {
-                pilha.push(noAtual);
-                alturas.push(++alturaAtual);
-                noAtual = noAtual.getFilhoEsquerda();
-            } else {
-                noAtual = pilha.pop();
-                alturaAtual = alturas.pop();
-                if (alturaAtual > alturaMaxima) {
-                    alturaMaxima = alturaAtual;
-                }
-                noAtual = noAtual.getFilhoDireita();
-            }
-        }
-        return alturaMaxima;
+        return this.raiz.obterAltura();
     }
 
     public int quantidadeNos() {
