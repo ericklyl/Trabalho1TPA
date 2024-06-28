@@ -2,7 +2,9 @@ package app;
 
 import lib.ArvoreBinaria;
 import lib.IArvoreBinaria;
+import lib.No;
 
+import java.util.Comparator;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -172,18 +174,16 @@ public class Aplicativo {
         Scanner alunoNomeScanner = new Scanner(System.in);
         System.out.println("Digite o nome do aluno a ser consultado: ");
         String nomeAluno = alunoNomeScanner.nextLine();
-        Stack<Aluno> resultado = new Stack<>();
-        alunos.emOrdem(aluno -> {
-            if (aluno.getNome().equalsIgnoreCase(nomeAluno)) {
-                resultado.add(aluno);
-            }
-        });
-        if (resultado.isEmpty()) {
+
+        Aluno alunoParaBuscar = new Aluno(0, nomeAluno);
+        Comparator<Aluno> comparadorPorNome = new ComparadorAlunoPorNome();
+
+        Aluno alunoEncontrado = alunos.pesquisar(alunoParaBuscar, comparadorPorNome);
+
+        if (alunoEncontrado == null) {
             System.out.println("Aluno não encontrado.");
         } else {
-            for (Aluno aluno : resultado) {
-                System.out.println(aluno);
-            }
+            System.out.println(alunoEncontrado);
         }
     }
 
